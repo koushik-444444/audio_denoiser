@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Denoise Audio with My Model</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+    <script src="https://unpkg.com/wavesurfer.js"></script>
+</head>
+<body>
+    <div class="container">
+        <h1>Denoise Your Audio 🎧</h1>
+        <form id="upload-form" action="/" method="post" enctype="multipart/form-data">
+            <div id="drop-zone">
+                <p>Drag & Drop your WAV file here or click to upload</p>
+                <input type="file" name="audio_file" id="audio_file" accept=".wav" required>
+            </div>
+            <div id="waveform"></div>
+            <button type="submit">Denoise</button>
+        </form>
+
+        {% if orig_audio %}
+        <div class="results">
+            <div class="audio-section">
+                <h2>Original Audio</h2>
+                <audio controls src="{{ url_for('static', filename=orig_audio.split('static/')[1]) }}"></audio>
+                <img src="{{ url_for('static', filename=orig_plot.split('static/')[1]) }}" alt="Original Spectrogram">
+            </div>
+            <div class="audio-section">
+                <h2>Denoised Audio</h2>
+                <audio controls src="{{ url_for('static', filename=denoised_audio.split('static/')[1]) }}"></audio>
+                <img src="{{ url_for('static', filename=denoised_plot.split('static/')[1]) }}" alt="Denoised Spectrogram">
+            </div>
+        </div>
+        {% endif %}
+    </div>
+</body>
+</html>
